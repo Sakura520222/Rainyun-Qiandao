@@ -506,7 +506,7 @@ def run_checkin(account_user=None, account_pwd=None):
     driver = None
     retry_stats = {'count': 0}
 
-    masked_user = f"{current_user[:3]}***{current_user[-3:] if len(current_user) > 6 else current_user}"
+    masked_user = f"{current_user[:1]}***{current_user[-2:] if len(current_user) > 3 else current_user}"
     
     class PrefixAdapter(logging.LoggerAdapter):
         def process(self, msg, kwargs):
@@ -700,7 +700,7 @@ def parse_accounts():
     
     logger.info(f"检测到 {len(accounts)} 个账号")
     for i, (username, _) in enumerate(accounts, 1):
-        masked_user = f"{username[:3]}***{username[-3:] if len(username) > 6 else username}"
+        masked_user = f"{username[:1]}***{username[-2:] if len(username) > 3 else username}"
         logger.info(f"账号 {i}: {masked_user}")
     
     return accounts
@@ -787,7 +787,7 @@ def run_all_accounts():
     if retry_accounts:
         logger.info(f"重试统计: {len(retry_accounts)} 个账号进行了重试")
         for username, count in retry_accounts:
-            masked_user = f"{username[:3]}***{username[-3:] if len(username) > 6 else username}"
+            masked_user = f"{username[:1]}***{username[-2:] if len(username) > 3 else username}"
             final_status = "成功" if results[username]['result'] and results[username]['result']['status'] else "失败"
             logger.info(f"  - {masked_user}: 重试 {count} 次, 最终{final_status}")
     
