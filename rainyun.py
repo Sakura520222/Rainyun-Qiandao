@@ -615,7 +615,7 @@ def run_checkin(account_user=None, account_pwd=None):
         points_raw = driver.find_element(By.XPATH,
                                          '//*[@id="app"]/div[1]/div[3]/div[2]/div/div/div[2]/div[1]/div[1]/div/p/div/h3').get_attribute("textContent")
         current_points = int(''.join(re.findall(r'\d+', points_raw)))
-        logger_adapter.info(f"当前剩余积分: {current_points} | 约为 {current_points / 2000:.2f} 元")
+        # 积分不打印到日志（公开可见），仅通过通知渠道发送
         logger_adapter.info("签到任务执行成功！")
         return {
             'status': True,

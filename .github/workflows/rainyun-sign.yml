@@ -80,7 +80,8 @@ jobs:
       - name: 生成用户名哈希
         id: hash
         run: |
-          USER_HASH=$(echo -n "${{ secrets.RAINYUN_USER }}" | sha256sum | cut -c1-16)
+          # 使用CACHE_SALT加盐，防止公开日志中的哈希被离线暴力枚举还原手机号
+          USER_HASH=$(echo -n "${{ secrets.CACHE_SALT }}${{ secrets.RAINYUN_USER }}" | sha256sum | cut -c1-16)
           echo "user_hash=$USER_HASH" >> $GITHUB_OUTPUT
 
       - name: 清理旧Cookie缓存
